@@ -9,6 +9,7 @@ import Notes from "./components/notes/notes";
 import EditMenu from "./components/cantinaMenu/EditMenu";
 import GameDescription from "./components/gameDescription/GameDescription";
 import {MyItems} from "./components/myItems/MyItems";
+import SignUp from "./components/auth/signup";
 
 class App extends React.Component {
 
@@ -94,10 +95,15 @@ class App extends React.Component {
                                                        user={this.state.user}
                                                        updateLoggedInUser={this.updateLoggedInUser}/>}
                         />
+                        <Route exact path="/signup"
+                               render={props => <SignUp {...props}
+                                                        updateLoggedInUser={this.updateLoggedInUser}/>}
+                        />
+
                         <Route exact path="/my-items"
                                render={props => <MyItems {...props}
-                                                        user={this.state.user}
-                                                        updateLoggedInUser={this.updateLoggedInUser}/>}
+                                                         user={this.state.user}
+                                                         updateLoggedInUser={this.updateLoggedInUser}/>}
                         />
                         <Route exact path={"/game-description"}>
                             <GameDescription/>

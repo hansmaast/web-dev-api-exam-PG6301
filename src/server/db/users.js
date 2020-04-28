@@ -31,7 +31,7 @@ function createUser(email, firstName, lastName, password) {
         password: password,
         gamesPlayed: 0,
         // containing the id of your items, populated for testing
-        myItems: [0, 1],
+        myItems: [],
         cash: 0
     };
 
