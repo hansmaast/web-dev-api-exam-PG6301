@@ -12,7 +12,6 @@ export class MyItems extends React.Component {
 
     componentDidMount() {
         console.log('User -->', this.props.user)
-        this.props.updateLoggedInUser(this.props.user);
         this.fetchMyItems();
     }
 
@@ -50,6 +49,11 @@ export class MyItems extends React.Component {
     }
 
     render() {
+        const {user} = this.props;
+        if (!user) {
+            this.props.history.push('/');
+            return null;
+        }
         const {myItems, errorMsg} = this.state
 
         let error = errorMsg ? <p>{errorMsg}</p> : null
