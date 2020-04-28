@@ -11,11 +11,9 @@ const helmet = require('helmet');
 
 const path = require('path');
 
-const auth = require('./routes/authentication')
-const notes = require('./routes/notes')
-const menu = require('./routes/menu')
-const gameItems = require('./routes/gameItems')
-const chat = require('./routes/chat')
+const auth = require('./routes/authentication');
+const gameItems = require('./routes/gameItems');
+const chat = require('./routes/chat');
 
 
 // handling JSON payloads
@@ -45,8 +43,6 @@ app.use(passport.session());
 
 // routes
 app.use('/api', auth);
-app.use('/api', notes);
-app.use('/api', menu);
 app.use('/api', chat);
 app.use('/api', gameItems);
 

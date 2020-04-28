@@ -8,7 +8,7 @@ const {mount} = require('enzyme');
 const {MemoryRouter} = require('react-router-dom');
 const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
 const {app} = require('../../src/server/app');
-const {HeaderBar} = require('~/client/components/header/headerbar');
+const {HeaderBar} = require('../../src/client/components/header/headerbar');
 const {resetAllUsers, getUser, createUser} = require('../../src/server/db/users');
 const {msg} = require('../../src/shared/utils');
 const request = require('supertest');
@@ -52,7 +52,8 @@ describe('headerbar if logged in', () => {
 
     it('should contain Home, notes and Logout', function () {
         expect(wrapper.html()).toContain('Home');
-        expect(wrapper.html()).toContain('Notes');
+        expect(wrapper.html()).toContain('My Items');
+        expect(wrapper.html()).toContain('Gacha');
         expect(wrapper.html()).toContain('Logout');
     });
 

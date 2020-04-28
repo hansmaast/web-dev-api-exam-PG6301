@@ -5,12 +5,20 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {Home} from "./components/home/home";
 import Login from "./components/auth/login";
 import HeaderBar from "./components/header/headerbar";
-import Notes from "./components/notes/notes";
-import EditMenu from "./components/cantinaMenu/EditMenu";
 import GameDescription from "./components/gameDescription/GameDescription";
 import {MyItems} from "./components/myItems/MyItems";
 import SignUp from "./components/auth/signup";
 import {GachaGame} from "./components/gachaGame/GachaGame";
+
+
+/**
+ *TODO: -->
+ * - Write those tests!!
+ * - Increment money when buying loot
+ * - Tests tests test
+ * - Maybye implement chat if time..
+ */
+
 
 class App extends React.Component {
 
@@ -118,7 +126,7 @@ class App extends React.Component {
     buyUserLootBox = price => {
         const user = {...this.state.user};
         console.log(typeof price, price);
-        // TODO thisis not updating when bying loot
+        // TODO this is not updating when bying loot
         user.cash -= price;
         console.log('user cash ->', user);
         this.setState({user: {...user}}, () => this.updateUserInDb());
@@ -231,11 +239,6 @@ class App extends React.Component {
                         <Route exact path={"/game-description"}>
                             <GameDescription/>
                         </Route>
-                        <Route exact path="/notes"
-                               render={props => <Notes {...props}
-                                                       user={this.state.user}
-                                                       updateLoggedInUser={this.updateLoggedInUser}/>}
-                        />
                         <Route component={this.notFound}/>
                     </Switch>
                 </>
