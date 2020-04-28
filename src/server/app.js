@@ -14,6 +14,7 @@ const path = require('path');
 const auth = require('./routes/authentication')
 const notes = require('./routes/notes')
 const menu = require('./routes/menu')
+const gameItems = require('./routes/gameItems')
 const chat = require('./routes/chat')
 
 
@@ -47,6 +48,7 @@ app.use('/api', auth);
 app.use('/api', notes);
 app.use('/api', menu);
 app.use('/api', chat);
+app.use('/api', gameItems);
 
 
 // enabling Ws connection

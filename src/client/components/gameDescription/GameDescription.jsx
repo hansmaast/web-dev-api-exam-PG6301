@@ -44,7 +44,7 @@ export class GameDescription extends React.Component {
                     <div key={index} style={styles.noteContainer}>
                         <h2>{item.name}</h2>
                         <p>{item.description}</p>
-                        <p>Price: ${item.price}</p>
+                        <p>Price: ${item.price},-</p>
                     </div>
                 )
             })

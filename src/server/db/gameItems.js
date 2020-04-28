@@ -100,6 +100,12 @@ const gameItems = [
     }
 ];
 
+
+const getAllItems = () => {
+    return gameItems;
+}
+
+
 /**
  * Returns an array of random items
  * @param numberOfItems
@@ -125,4 +131,8 @@ const getRandomItems = numberOfItems => {
     return randomItems;
 };
 
-module.exports = {gameItems, getRandomItems}
+module.exports = {
+    gameItems,
+    getAllItems,
+    getRandomItems
+};
