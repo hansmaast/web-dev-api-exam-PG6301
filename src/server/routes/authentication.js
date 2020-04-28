@@ -3,6 +3,7 @@ const passport = require('passport');
 
 const {
     getUser,
+    updateUser,
     signUp,
     login,
     logOut
@@ -17,6 +18,8 @@ router.post('/signup', signUp)
 router.post('/logout', logOut);
 
 router.get('/user', getUser);
+
+router.put('/user', updateUser);
 
 
 module.exports = router;

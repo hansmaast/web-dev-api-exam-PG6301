@@ -30,8 +30,8 @@ function createUser(email, firstName, lastName, password) {
         lastName: lastName,
         password: password,
         gamesPlayed: 0,
-        // containing the id of your items, populated for testing
-        myItems: [],
+        // containing the id of your items as key, value represents nr of items
+        myItems: {},
         cash: 0,
         lootBoxes: 3
     };
@@ -56,4 +56,13 @@ function resetAllUsers() {
     userCounter = 0;
 }
 
-module.exports = {getUser, verifyUser, createUser, resetAllUsers, initTestUser};
+function updateUser(user) {
+    if (!user) {
+        return false;
+    }
+
+    users.set(user.email, user);
+    return true;
+}
+
+module.exports = {getUser, updateUser, verifyUser, createUser, resetAllUsers, initTestUser};

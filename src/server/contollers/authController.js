@@ -68,3 +68,25 @@ exports.getUser = (req, res) => {
         user: req.user
     });
 };
+
+exports.updateUser = (req, res) => {
+
+    if (!req.user) {
+        res.status(401).json({msg: msg.notAuthorized});
+        return;
+    }
+
+    const user = {...req.body};
+    console.log('data for user update:', user);
+    const updated = Users.updateUser(user)
+
+    if (updated) {
+        res.status(200).json({
+            msg: 'user updated!'
+        });
+    } else {
+        res.status(200).json({
+            msg: 'could not update user..'
+        });
+    }
+};

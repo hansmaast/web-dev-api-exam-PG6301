@@ -16,43 +16,15 @@ export class MyItems extends React.Component {
     }
 
     fetchMyItems = async () => {
-        const url = "api/my-items";
+        const {myItems} = this.props.user;
 
-        const myItems = [...this.props.user.myItems];
-
-        console.log('user items ->', myItems);
-
-        const payload = {
-            myItems
-        };
-        let response;
-        try {
-            response = await fetch(url, {
-                method: "post",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-        } catch (err) {
-            this.setState({errorMsg: "Failed to connect to server: " + err});
-            return;
-        }
-
-        if (response.status !== 200) {
-            //TODO here could have some warning message in the page.
-        } else {
-            const payload = await response.json();
-
-            this.setState({myItems: payload})
-        }
+        this.setState({myItems: Object.values(myItems)});
     }
 
-    sellItem = (index) => {
-        const {myItems} = this.state;
+    sellItem = (id) => {
         const {sellUserItem} = this.props;
 
-        sellUserItem(myItems[index])
+        sellUserItem(id);
 
         this.fetchMyItems();
     };
@@ -69,13 +41,14 @@ export class MyItems extends React.Component {
 
         let listOfItems;
         if (myItems !== null && myItems.length > 0) {
-            listOfItems = myItems.map((item, index) => {
+            listOfItems = myItems.map((item) => {
                 return (
-                    <div key={index} style={styles.noteContainer}>
+                    <div key={item.id} style={styles.noteContainer}>
                         <h2>{item.name}</h2>
                         <p>{item.description}</p>
                         <p>Price: ${item.price},-</p>
-                        <button onClick={() => this.sellItem(index)}>Sell item</button>
+                        <p>Amount: {item.amount}</p>
+                        <button onClick={() => this.sellItem(item.id)}>Sell item</button>
                     </div>
                 )
             })

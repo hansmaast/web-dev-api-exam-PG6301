@@ -71,10 +71,12 @@ export class LootBox extends React.Component {
             listOfItems = <p> Loot the box to view the items...</p>
         }
 
-        if (newItems && newItems.length === 0) {
-            this.props.updateLootBoxes(-1);
-            return null;
+        if (newItems !== null && newItems.length === 0) {
+            console.log('ready to delete..')
+            this.props.updateUserLootBoxes.remove();
+            this.setState({newItems: null});
         }
+
 
         return (
             <div style={styles.noteContainer}>
@@ -83,6 +85,7 @@ export class LootBox extends React.Component {
                     {listOfItems}
                 </div>
                 <button onClick={() => this.getRandomItems(items)}>Gimme some loot!</button>
+                <button onClick={this.props.updateUserLootBoxes.remove}>Remove box</button>
             </div>
         )
     }

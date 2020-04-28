@@ -32,34 +32,117 @@ class App extends React.Component {
         this.setState({user: user});
     };
 
+    updateUserInDb = async () => {
+
+        const {user} = this.state;
+
+        const url = "/api/user";
+
+        const payload = user
+        let response;
+        try {
+            response = await fetch(url, {
+                method: "put",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+        } catch (err) {
+            console.log(err);
+            this.setState({errorMsg: "Failed to connect to server: " + err});
+            return;
+        }
+
+        if (response.status === 401) {
+            // set user to null if unauthorized
+            return;
+        }
+
+        if (response.status !== 200) {
+            //TODO here could have some warning message in the page.
+            console.log('Looks like your not online.. we can not save your changes.')
+        }
+
+    };
+
     updateUserItems = item => {
         const user = {...this.state.user}
         let {myItems} = user;
 
-        myItems.push(item.id)
+        if (myItems.hasOwnProperty(item.id)) {
 
-        this.setState({user: {...user}});
+            const propValue = myItems[item.id].amount;
+            myItems[item.id].amount = propValue + 1;
+
+        } else {
+
+            myItems[item.id] = {
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                amount: 1,
+                price: item.price
+            }
+        }
+
+        this.setState({user: {...user}}, () => this.updateUserInDb());
     }
 
-    sellUserItem = item => {
+    sellUserItem = id => {
+
         const user = {...this.state.user}
         let {myItems} = user;
 
-        let index = myItems.indexOf(item.id)
-        myItems.splice(index, 1)
 
-        user.cash += item.price;
+        if (myItems[id].amount > 1){
 
-        this.setState({user: {...user}});
+            const propValue = myItems[id].amount;
+            myItems[id].amount = propValue - 1;
+
+            user.cash += myItems[id].price;
+
+        } else {
+
+            user.cash += myItems[id].price;
+
+            delete myItems[id];
+
+        }
+
+        this.setState({user: {...user}}, () => this.updateUserInDb());
+
+
     }
 
-    updateUserLootboxes = boxes => {
-        const user = {...this.state.user}
+    buyUserLootBox = price => {
+        const user = {...this.state.user};
+        console.log(typeof price, price);
+        // TODO thisis not updating when bying loot
+        user.cash -= price;
+        console.log('user cash ->', user);
+        this.setState({user: {...user}}, () => this.updateUserInDb());
 
-        user.lootBoxes += boxes;
+    }
 
-        this.setState({user: {...user}});
-        console.log('Your boxes ->', this.state.user.lootBoxes)
+    updateUserLootBoxes = {
+        remove: () => {
+
+            const user = {...this.state.user}
+            const prevValue = user.lootBoxes;
+            user.lootBoxes = prevValue - 1
+
+            this.setState({user: {...user}}, () => this.updateUserInDb());
+        },
+        add: () => {
+
+            const user = {...this.state.user}
+            const prevValue = user.lootBoxes;
+            user.lootBoxes = prevValue + 1
+
+            this.setState({user: {...user}}, () => this.updateUserInDb());
+            console.log('Your boxes ->', this.state.user.lootBoxes)
+        }
     }
 
     async checkIfAlreadyLoggedIn() {
@@ -135,8 +218,8 @@ class App extends React.Component {
                                render={props => <GachaGame {...props}
                                                            user={this.state.user}
                                                            updateUserItems={this.updateUserItems}
-                                                           updateLootBoxes={this.updateUserLootboxes}
-                                                           updateLoggedInUser={this.updateLoggedInUser}/>}
+                                                           buyUserLootBox={this.buyUserLootBox}
+                                                           updateUserLootBoxes={this.updateUserLootBoxes}/>}
                         />
 
                         <Route exact path="/my-items"
