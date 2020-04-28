@@ -2,24 +2,39 @@ import React from "react";
 import {styles} from "../../styles";
 import {withRouter} from "react-router-dom";
 
-export class GameDescription extends React.Component {
+export class MyItems extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameItems: null
+            myItems: null
         }
     }
 
     componentDidMount() {
-        this.fetchItems()
+        console.log('User -->', this.props.user)
+        this.props.updateLoggedInUser(this.props.user);
+        this.fetchMyItems();
     }
 
-    fetchItems = async () => {
-        const url = "api/game-items";
+    fetchMyItems = async () => {
+        const url = "api/my-items";
 
+        const myItems = [...this.props.user.myItems];
+
+        console.log('user items ->', myItems);
+
+        const payload = {
+            myItems
+        };
         let response;
         try {
-            response = await fetch(url)
+            response = await fetch(url, {
+                method: "post",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
         } catch (err) {
             this.setState({errorMsg: "Failed to connect to server: " + err});
             return;
@@ -29,31 +44,36 @@ export class GameDescription extends React.Component {
             //TODO here could have some warning message in the page.
         } else {
             const payload = await response.json();
-            this.setState({gameItems: payload})
+
+            this.setState({myItems: payload})
         }
     }
 
     render() {
-        const {gameItems} = this.state
+        const {myItems, errorMsg} = this.state
+
+        let error = errorMsg ? <p>{errorMsg}</p> : null
 
         let listOfItems;
-        if (gameItems !== null && gameItems.length > 0) {
-            listOfItems = gameItems.map((item, index) => {
+        if (myItems !== null && myItems.length > 0) {
+            listOfItems = myItems.map((item, index) => {
                 return (
                     <div key={index} style={styles.noteContainer}>
                         <h2>{item.name}</h2>
                         <p>{item.description}</p>
                         <p>Price: ${item.price},-</p>
+                        <button>Sell item</button>
                     </div>
                 )
             })
         } else {
-            listOfItems = <p> There are no items...</p>
+            listOfItems = <p> You have no items...</p>
         }
 
         return (
             <div style={styles.mainContainer}>
-                <h2>Items found in game:</h2>
+                <h2>Your items:</h2>
+                {error}
                 <div>
                     {listOfItems}
                 </div>
@@ -62,4 +82,4 @@ export class GameDescription extends React.Component {
     }
 }
 
-export default withRouter(GameDescription)
+export default withRouter(MyItems)

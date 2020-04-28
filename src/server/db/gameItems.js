@@ -105,6 +105,17 @@ const getAllItems = () => {
     return gameItems;
 }
 
+const getMyItems = (itemIds) => {
+
+    const myItems = [];
+    itemIds.forEach( itemId => {
+        const item = gameItems.find( ({id}) => id === itemId );
+        myItems.push(item);
+    })
+
+    return myItems;
+}
+
 
 /**
  * Returns an array of random items
@@ -134,5 +145,6 @@ const getRandomItems = numberOfItems => {
 module.exports = {
     gameItems,
     getAllItems,
+    getMyItems,
     getRandomItems
 };

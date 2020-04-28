@@ -13,5 +13,25 @@ exports.getItems = (req, res) => {
     res.status(200).json(items)
 };
 
+exports.getMyItems = (req, res) => {
+
+    if (!req.user) {
+        res.status(401).json({msg: msg.notAuthorized});
+        return;
+    }
+
+    // const itemIds = req.body.payload
+
+
+    const itemIds = req.body.myItems;
+    console.log('itemIds ->', itemIds);
+
+    const myItems = GameItems.getMyItems(itemIds);
+
+    console.log(myItems);
+    res.status(200).json(myItems);
+
+}
+
 
 

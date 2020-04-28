@@ -8,6 +8,7 @@ import HeaderBar from "./components/header/headerbar";
 import Notes from "./components/notes/notes";
 import EditMenu from "./components/cantinaMenu/EditMenu";
 import GameDescription from "./components/gameDescription/GameDescription";
+import {MyItems} from "./components/myItems/MyItems";
 
 class App extends React.Component {
 
@@ -21,6 +22,7 @@ class App extends React.Component {
     componentDidMount() {
         // Checks if session cookie already exists and gets the user in return
         this.checkIfAlreadyLoggedIn();
+        console.log('index mounted')
 
     }
 
@@ -78,6 +80,7 @@ class App extends React.Component {
             <BrowserRouter>
                 <>
                     <HeaderBar user={this.state.user}
+                               checkIfLoggedIn={this.checkIfAlreadyLoggedIn}
                                updateLoggedInUser={this.updateLoggedInUser}
                     />
                     <Switch>
@@ -91,8 +94,8 @@ class App extends React.Component {
                                                        user={this.state.user}
                                                        updateLoggedInUser={this.updateLoggedInUser}/>}
                         />
-                        <Route exact path="/editMenu"
-                               render={props => <EditMenu {...props}
+                        <Route exact path="/my-items"
+                               render={props => <MyItems {...props}
                                                         user={this.state.user}
                                                         updateLoggedInUser={this.updateLoggedInUser}/>}
                         />

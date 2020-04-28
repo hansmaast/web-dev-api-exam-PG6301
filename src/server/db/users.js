@@ -28,7 +28,11 @@ function createUser(email, firstName, lastName, password) {
         email: email,
         firstName: firstName,
         lastName: lastName,
-        password: password
+        password: password,
+        gamesPlayed: 0,
+        // containing the id of your items, populated for testing
+        myItems: [0, 1],
+        cash: 0
     };
 
     users.set(email, user);
@@ -38,7 +42,7 @@ function createUser(email, firstName, lastName, password) {
 
 function initTestUser() {
 
-    const user = createUser('pablo@cantina.io', 'Pablo', 'Garcia', 'Asd123');
+    const user = createUser('safri@saffran.io', 'Safri', 'Saffran', 'Asd123');
     if (!user) {
         return;
     } else {

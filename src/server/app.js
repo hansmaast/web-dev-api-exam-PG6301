@@ -31,7 +31,7 @@ app.use(session({
 
 
 // sets up security-related HTTP response headers
-app.use(helmet());
+// app.use(helmet());
 
 
 // needed to server static files
