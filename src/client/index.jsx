@@ -10,6 +10,7 @@ import EditMenu from "./components/cantinaMenu/EditMenu";
 import GameDescription from "./components/gameDescription/GameDescription";
 import {MyItems} from "./components/myItems/MyItems";
 import SignUp from "./components/auth/signup";
+import {GachaGame} from "./components/gachaGame/GachaGame";
 
 class App extends React.Component {
 
@@ -30,6 +31,36 @@ class App extends React.Component {
     updateLoggedInUser = (user) => {
         this.setState({user: user});
     };
+
+    updateUserItems = item => {
+        const user = {...this.state.user}
+        let {myItems} = user;
+
+        myItems.push(item.id)
+
+        this.setState({user: {...user}});
+    }
+
+    sellUserItem = item => {
+        const user = {...this.state.user}
+        let {myItems} = user;
+
+        let index = myItems.indexOf(item.id)
+        myItems.splice(index, 1)
+
+        user.cash += item.price;
+
+        this.setState({user: {...user}});
+    }
+
+    updateUserLootboxes = boxes => {
+        const user = {...this.state.user}
+
+        user.lootBoxes += boxes;
+
+        this.setState({user: {...user}});
+        console.log('Your boxes ->', this.state.user.lootBoxes)
+    }
 
     async checkIfAlreadyLoggedIn() {
 
@@ -100,9 +131,18 @@ class App extends React.Component {
                                                         updateLoggedInUser={this.updateLoggedInUser}/>}
                         />
 
+                        <Route exact path="/gacha-game"
+                               render={props => <GachaGame {...props}
+                                                           user={this.state.user}
+                                                           updateUserItems={this.updateUserItems}
+                                                           updateLootBoxes={this.updateUserLootboxes}
+                                                           updateLoggedInUser={this.updateLoggedInUser}/>}
+                        />
+
                         <Route exact path="/my-items"
                                render={props => <MyItems {...props}
                                                          user={this.state.user}
+                                                         sellUserItem={this.sellUserItem}
                                                          updateLoggedInUser={this.updateLoggedInUser}/>}
                         />
                         <Route exact path={"/game-description"}>

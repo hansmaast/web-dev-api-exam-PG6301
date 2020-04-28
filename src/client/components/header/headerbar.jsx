@@ -36,14 +36,22 @@ export class HeaderBar extends React.Component {
         return (
             <>
                 <button style={styles.secondaryBtn}>
-                    <Link to={"/editMenu"}>
-                        Menu editor
+                    <Link to={"/my-items"}>
+                        My Items
+                    </Link>
+                </button>
+
+                <button style={styles.secondaryBtn}>
+                    <Link to={"/gacha-game"}>
+                        Gacha
                     </Link>
                 </button>
 
                 <h3>
                     Welcome, {userName}!
                 </h3>
+
+                <h3>$ {user.cash}</h3>
 
                 <button style={styles.secondaryBtn} onClick={this.doLogout}>
                     Logout

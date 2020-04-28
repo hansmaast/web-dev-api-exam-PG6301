@@ -17,7 +17,7 @@ export class Home extends React.Component {
                     <h1>Welcome!</h1>
                     <h3>to</h3>
                     <h1>Gourmet Gacha!</h1>
-                    <Link to={'/gacha'}>Play Game</Link>
+                    <Link to={'/gacha-game'}>Play Game</Link>
                     <h3>or</h3>
                     <Link to={'/my-items'}>View my items</Link>
                     <p>Click <Link to={'/game-description'}>here</Link> view a descrition of the items found in the game</p>

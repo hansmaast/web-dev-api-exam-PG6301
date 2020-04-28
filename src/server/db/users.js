@@ -32,7 +32,8 @@ function createUser(email, firstName, lastName, password) {
         gamesPlayed: 0,
         // containing the id of your items, populated for testing
         myItems: [],
-        cash: 0
+        cash: 0,
+        lootBoxes: 3
     };
 
     users.set(email, user);

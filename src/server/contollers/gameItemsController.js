@@ -13,6 +13,27 @@ exports.getItems = (req, res) => {
     res.status(200).json(items)
 };
 
+
+exports.getRandomItems = (req, res) => {
+
+    if (!req.user) {
+        res.status(401).json({msg: msg.notAuthorized});
+        return;
+    }
+
+    const amount = parseInt(req.query.amount);
+
+    const randomItems = GameItems.getRandomItems(amount);
+
+    if (randomItems.length === 0) {
+        res.status(200).json({msg: 'There are no items in this game..'});
+        return;
+    }
+
+    res.status(200).json(randomItems)
+}
+
+
 exports.getMyItems = (req, res) => {
 
     if (!req.user) {

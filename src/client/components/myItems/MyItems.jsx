@@ -48,6 +48,15 @@ export class MyItems extends React.Component {
         }
     }
 
+    sellItem = (index) => {
+        const {myItems} = this.state;
+        const {sellUserItem} = this.props;
+
+        sellUserItem(myItems[index])
+
+        this.fetchMyItems();
+    };
+
     render() {
         const {user} = this.props;
         if (!user) {
@@ -66,7 +75,7 @@ export class MyItems extends React.Component {
                         <h2>{item.name}</h2>
                         <p>{item.description}</p>
                         <p>Price: ${item.price},-</p>
-                        <button>Sell item</button>
+                        <button onClick={() => this.sellItem(index)}>Sell item</button>
                     </div>
                 )
             })
