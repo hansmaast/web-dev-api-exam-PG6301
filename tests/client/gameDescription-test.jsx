@@ -1,17 +1,16 @@
 const React = require('react');
 const {mount} = require('enzyme');
-const {MemoryRouter} = require('react-router-dom');
 const {GameDescription} = require('../../src/client/components/gameDescription/GameDescription');
 
 import gameItems from '../../src/server/db/gameItems';
 
 let wrapper;
 const items = gameItems.getAllItems();
+
 beforeEach(() => {
         wrapper = mount(
                 <GameDescription/>
         )
-    console.log(items)
     wrapper.setState({ gameItems: items})
     }
 );

@@ -105,15 +105,24 @@ const getAllItems = () => {
     return gameItems;
 }
 
-const getMyItems = (itemIds) => {
+const getMissingItems = (itemIds) => {
 
-    const myItems = [];
+    const missingItems = [...gameItems];
+
     itemIds.forEach( itemId => {
-        const item = gameItems.find( ({id}) => id === itemId );
-        myItems.push(item);
+
+        const intId = parseInt(itemId);
+        const item = missingItems.find( ({id}) => id === intId );
+
+        const index = missingItems.indexOf(item);
+
+        if (index !== -1) {
+            missingItems.splice(index, 1);
+        }
+
     })
 
-    return myItems;
+    return missingItems;
 }
 
 
@@ -145,6 +154,6 @@ const getRandomItems = numberOfItems => {
 module.exports = {
     gameItems,
     getAllItems,
-    getMyItems,
+    getMissingItems,
     getRandomItems
 };

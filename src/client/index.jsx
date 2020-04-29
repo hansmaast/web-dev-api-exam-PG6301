@@ -1,3 +1,7 @@
+/**
+ * Code inspired by this:
+ * https://github.com/arcuri82/web_development_and_api_design/blob/a1b539f078b3a6cca41730b3ffd50cd7f967e5ba/exercise-solutions/quiz-game/part-10/src/client/index.jsx
+ */
 import React from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
@@ -11,26 +15,18 @@ import SignUp from "./components/auth/signup";
 import {GachaGame} from "./components/gachaGame/GachaGame";
 
 
-/**
- *TODO: -->
- * - Increment money when buying loot
- * - Maybye implement chat if time..
- */
-
-
 export class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             user: null,
-        };
+        }
     }
 
     componentDidMount() {
-        // Checks if session cookie already exists and gets the user in return
         this.fetchAndUpdateUserInfo();
-        console.log('index mounted')
+        console.log('index mounted');
     }
 
     fetchAndUpdateUserInfo = async () => {
@@ -53,13 +49,16 @@ export class App extends React.Component {
         }
 
         if (response.status === 401) {
-            // set user to null if unauthorized
+
             this.updateLoggedInUser(null);
             return;
+
         }
 
         if (response.status !== 200) {
-            //TODO here could have some warning message in the page.
+
+            this.setState({errMsg: 'Error while fetching user. Status code: ' + response.status});
+
         } else {
 
             const payload = await response.json();
@@ -67,11 +66,16 @@ export class App extends React.Component {
             this.updateLoggedInUser(payload.user);
 
         }
+
     }
 
+
     updateLoggedInUser = (user) => {
+
         this.setState({user: user});
+
     }
+
 
     updateUserInDb = async () => {
 
@@ -81,7 +85,9 @@ export class App extends React.Component {
 
         const payload = user
         let response;
+
         try {
+
             response = await fetch(url, {
                 method: "put",
                 headers: {
@@ -89,25 +95,28 @@ export class App extends React.Component {
                 },
                 body: JSON.stringify(payload)
             })
+
         } catch (err) {
+
             console.log(err);
             this.setState({errorMsg: "Failed to connect to server: " + err});
             return;
+
         }
 
         if (response.status === 401) {
-            // set user to null if unauthorized
             return;
         }
 
         if (response.status !== 200) {
-            //TODO here could have some warning message in the page.
-            console.log('Looks like your not online.. we can not save your changes.')
+            this.setState({errMsg: 'Error while fetching user. Status code: ' + response.status})
         }
 
     }
 
+
     updateUserItems = item => {
+
         const user = {...this.state.user}
         let {myItems} = user;
 
@@ -125,16 +134,47 @@ export class App extends React.Component {
                 amount: 1,
                 price: item.price
             }
+
         }
 
         this.setState({user: {...user}}, () => this.updateUserInDb());
+
     }
+
+
+    updateUserLootBoxes = {
+
+        remove: () => {
+
+            const user = {...this.state.user};
+
+            const prevValue = user.lootBoxes;
+
+            user.lootBoxes = prevValue - 1;
+
+            this.setState({user: {...user}}, () => this.updateUserInDb());
+
+        },
+
+        add: () => {
+
+            const user = {...this.state.user};
+
+            const prevValue = user.lootBoxes;
+
+            user.lootBoxes = prevValue + 1;
+
+            this.setState({user: {...user}}, () => this.updateUserInDb());
+
+        }
+
+    }
+
 
     sellUserItem = id => {
 
-        const user = {...this.state.user}
+        const user = {...this.state.user};
         let {myItems} = user;
-
 
         if (myItems[id].amount > 1) {
 
@@ -153,93 +193,118 @@ export class App extends React.Component {
 
         this.setState({user: {...user}}, () => this.updateUserInDb());
 
-
     }
 
+
     buyUserLootBox = price => {
+
         const user = {...this.state.user};
-        console.log(typeof price, price);
-        // TODO this is not updating when bying loot
+
+        //BUG: this is not updating when buying loot
         user.cash -= price;
-        console.log('user cash ->', user);
+
         this.setState({user: {...user}}, () => this.updateUserInDb());
 
     }
 
-    updateUserLootBoxes = {
-        remove: () => {
-
-            const user = {...this.state.user}
-            const prevValue = user.lootBoxes;
-            user.lootBoxes = prevValue - 1
-
-            this.setState({user: {...user}}, () => this.updateUserInDb());
-        },
-        add: () => {
-
-            const user = {...this.state.user}
-            const prevValue = user.lootBoxes;
-            user.lootBoxes = prevValue + 1
-
-            this.setState({user: {...user}}, () => this.updateUserInDb());
-            console.log('Your boxes ->', this.state.user.lootBoxes)
-        }
-    }
 
     notFound() {
         return (
             <div>
-                <h2>NOT FOUND: 404</h2>
+                <h2>Page not found: 404</h2>
                 <p>
-                    ERROR: the page you requested in not available.
+                    The page you requested in not available.
                 </p>
             </div>
         );
     }
 
+
     render() {
+
         return (
+
             <BrowserRouter>
                 <>
-                    <HeaderBar user={this.state.user}
-                               updateLoggedInUser={this.updateLoggedInUser}
+                    <HeaderBar
+                        user={this.state.user}
+                        updateLoggedInUser={this.updateLoggedInUser}
                     />
+
                     <Switch>
-                        <Route exact path="/"
-                               render={props => <Home {...props}
-                                                      user={this.state.user}
-                                                      fetchAndUpdateUserInfo={this.fetchAndUpdateUserInfo}/>}
+                        <Route
+                            exact
+                            path="/"
+                            render={props => (
+                                <Home
+                                    {...props}
+                                    user={this.state.user}
+                                    fetchAndUpdateUserInfo={this.fetchAndUpdateUserInfo}
+                                />
+                            )}
                         />
-                        <Route exact path="/login"
-                               render={props => <Login {...props}
-                                                       user={this.state.user}
-                                                       fetchAndUpdateUserInfo={this.fetchAndUpdateUserInfo}/>}
+
+                        <Route
+                            exact
+                            path="/login"
+                            render={props => (
+                                <Login
+                                    {...props}
+                                    user={this.state.user}
+                                    fetchAndUpdateUserInfo={this.fetchAndUpdateUserInfo}
+                                />
+                            )}
                         />
-                        <Route exact path="/signup"
-                               render={props => <SignUp {...props}
-                                                        fetchAndUpdateUserInfo={this.fetchAndUpdateUserInfo}/>}
+
+                        <Route
+                            exact
+                            path="/signup"
+                            render={props => (
+                                <SignUp
+                                    {...props}
+                                    fetchAndUpdateUserInfo={this.fetchAndUpdateUserInfo}
+                                />
+                            )}
                         />
-                        <Route exact path="/gacha-game"
-                               render={props => <GachaGame {...props}
-                                                           user={this.state.user}
-                                                           updateUserItems={this.updateUserItems}
-                                                           buyUserLootBox={this.buyUserLootBox}
-                                                           updateUserLootBoxes={this.updateUserLootBoxes}/>}
+
+                        <Route
+                            exact
+                            path="/gacha-game"
+                            render={props => (
+                                <GachaGame
+                                    {...props}
+                                    user={this.state.user}
+                                    updateUserItems={this.updateUserItems}
+                                    buyUserLootBox={this.buyUserLootBox}
+                                    updateUserLootBoxes={this.updateUserLootBoxes}
+                                />
+                            )}
                         />
-                        <Route exact path="/my-items"
-                               render={props => <MyItems {...props}
-                                                         user={this.state.user}
-                                                         sellUserItem={this.sellUserItem}/>}
+
+                        <Route
+                            exact
+                            path="/my-items"
+                            render={props => (
+                                <MyItems
+                                    {...props}
+                                    user={this.state.user}
+                                    sellUserItem={this.sellUserItem}
+                                />
+                            )}
                         />
+
                         <Route exact path={"/game-description"}>
                             <GameDescription/>
                         </Route>
+
                         <Route component={this.notFound}/>
                     </Switch>
                 </>
             </BrowserRouter>
         );
+
     }
+
 }
 
 ReactDOM.render(<App/>, document.getElementById("root"));

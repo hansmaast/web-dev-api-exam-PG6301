@@ -1,11 +1,8 @@
 const React = require('react');
 const {mount} = require('enzyme');
 const {MemoryRouter} = require('react-router-dom');
-const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
 const {Home} = require('../../src/client/components/home/home');
-const {resetAllUsers, getUser, createUser} = require('../../src/server/db/users');
-const {msg} = require('../../src/shared/utils');
-
+const {resetAllUsers} = require('../../src/server/db/users');
 import {testUser} from "./mockDataAndFuncs";
 
 import {notLoggedInContent} from "../../src/client/components/home/home";

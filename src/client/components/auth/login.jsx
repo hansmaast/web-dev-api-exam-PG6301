@@ -19,7 +19,9 @@ export class Login extends React.Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
+
     doLogIn = async () => {
+
         const {email, password} = this.state;
 
         const url = "/api/login";
@@ -29,6 +31,7 @@ export class Login extends React.Component {
         let response;
 
         try {
+
             response = await fetch(url, {
                 method: "post",
                 headers: {
@@ -36,9 +39,12 @@ export class Login extends React.Component {
                 },
                 body: JSON.stringify(payload)
             });
+
         } catch (err) {
+
             this.setState({errorMsg: "Failed to connect to server: " + err});
             return;
+
         }
 
         if (response.status === 401) {

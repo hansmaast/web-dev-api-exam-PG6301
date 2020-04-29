@@ -42,13 +42,7 @@ function createUser(email, firstName, lastName, password) {
 }
 
 function initTestUser() {
-
-    const user = createUser('safri@saffran.io', 'Safri', 'Saffran', 'Asd123');
-    if (!user) {
-        return;
-    } else {
-        console.log('Created user!', users);
-    }
+    return createUser('safri@saffran.io', 'Safri', 'Saffran', 'Asd123');
 }
 
 function resetAllUsers() {

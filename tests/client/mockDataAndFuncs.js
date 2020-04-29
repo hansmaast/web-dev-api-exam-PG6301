@@ -34,8 +34,6 @@ export let testUser = {
     lootBoxes: 3
 }
 
-export let newItems;
-
 export const updateUserLootBoxes = {
     remove: () => {
 
@@ -52,7 +50,7 @@ export const updateUserLootBoxes = {
         user.lootBoxes = prevValue + 1
 
         testUser = {...user};
-        console.log('Your boxes ->', user.lootBoxes)
+
     }
 }
 
@@ -81,33 +79,9 @@ export const updateUserItems = item => {
 export const buyUserLootBox = price => {
 
     const user = {...testUser};
-    console.log(typeof price, price);
-    // TODO this is not updating when bying loot
+
+    //BUG: this is not updating when bying loot
     user.cash -= price;
-    console.log('user cash ->', user);
 
     testUser = {...user};
-}
-
-export const getRandomItems = (amout) => {
-    // const url = `api/random-items?amount=${amout}`;
-
-    // let response;
-    // try {
-    //     response = await fetch(url)
-    // } catch (err) {
-    //     this.setState({errorMsg: "Failed to connect to server: " + err});
-    //     return;
-    // }
-    //
-    // if (response.status !== 200) {
-    //     //TODO here could have some warning message in the page.
-    // } else {
-    const payload = GameItems.getRandomItems(amout);
-
-    console.log('Random items ->', payload);
-
-    newItems = payload;
-
-    // }
 }

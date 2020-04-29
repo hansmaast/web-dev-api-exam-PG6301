@@ -54,12 +54,17 @@ describe('the loot box', () => {
         expect(lootBox.html()).toContain('Loot the box to view the items...');
     })
 
-    it('should display items on click', () => {
+    it('should display items on click', async () => {
         const lootBtn = wrapper.find('.gimmeLootBtn').at(0);
 
         lootBtn.simulate('click');
 
-        console.log(lootBtn.length)
+        await asyncCheckCondition(
+            () => {
+                wrapper.update()
+            },
+            200, 20);
+
     })
 
 })

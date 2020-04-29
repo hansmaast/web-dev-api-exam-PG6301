@@ -6,6 +6,7 @@
 const {app} = require('../../src/server/app');
 const Users = require('../../src/server/db/users');
 const GameItems = require('../../src/server/db/gameItems');
+const {gameItems} = require('../../src/server/db/gameItems');
 
 const request = require('supertest');
 let response;
@@ -20,7 +21,7 @@ const errorHandler = function (err, req, res, next) {
     res.send(500);
 };
 
-app.use(errorHandler);
+//app.use(errorHandler);
 
 beforeAll(() => {
     Users.resetAllUsers();
@@ -57,17 +58,17 @@ describe('game items api', () => {
         expect(response.statusCode).toBe(200);
     });
 
-    // note: this is not implemented in the application.
-    // myItems is retriev via the user object.
-    it('should return "myItems" items if authenticated', async () => {
+    it('should return "missing items" items if authenticated', async () => {
 
-        const myItemIds = [0, 1, 2];
+        const myItemIds = [0, 3, 5];
+
+        const numberOfMissingItems = gameItems.length - myItemIds.length
 
         response = await request(app)
-            .post(`/api/my-items`)
+            .post(`/api/missing-items`)
             .send({myItems: myItemIds})
             .set('cookie', cookie);
-        expect(response.body.length).toEqual(myItemIds.length)
+        expect(response.body.length).toEqual(numberOfMissingItems)
         expect(response.statusCode).toBe(200);
     });
 
@@ -76,7 +77,7 @@ describe('game items api', () => {
         const myItemIds = [0, 1, 2];
 
         response = await request(app)
-            .post(`/api/my-items`)
+            .post(`/api/missing-items`)
             .send({myItems: myItemIds})
         expect(response.statusCode).toBe(401);
     });

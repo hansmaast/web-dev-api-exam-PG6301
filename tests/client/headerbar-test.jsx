@@ -6,11 +6,8 @@
 const React = require('react');
 const {mount} = require('enzyme');
 const {MemoryRouter} = require('react-router-dom');
-const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
 const {HeaderBar} = require('../../src/client/components/header/headerbar');
 const {resetAllUsers, getUser, createUser} = require('../../src/server/db/users');
-const {msg} = require('../../src/shared/utils');
-
 import {testUser} from "./mockDataAndFuncs";
 
 let wrapper;
@@ -64,8 +61,6 @@ describe('headerbar if not logged in', () => {
             </MemoryRouter>
         )
 
-        console.log(wrapper.html());
-
         expect(wrapper.html()).toContain('LogIn');
         expect(wrapper.html()).toContain('Home');
     });
@@ -81,8 +76,6 @@ describe('headerbar if not logged in', () => {
                 />
             </MemoryRouter>
         )
-
-        console.log(wrapper.html());
 
         expect(wrapper.html()).toContain('not logged in')
     });

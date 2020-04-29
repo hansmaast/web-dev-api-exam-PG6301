@@ -39,23 +39,18 @@ exports.getRandomItems = (req, res) => {
 }
 
 
-exports.getMyItems = (req, res) => {
+exports.getMissingItems = (req, res) => {
 
     if (!req.user) {
         res.status(401).json({msg: msg.notAuthorized});
         return;
     }
-
-    // const itemIds = req.body.payload
-
-
+    
     const itemIds = req.body.myItems;
-    console.log('itemIds ->', itemIds);
 
-    const myItems = GameItems.getMyItems(itemIds);
+    const missingItems = GameItems.getMissingItems(itemIds);
 
-    console.log(myItems);
-    res.status(200).json(myItems);
+    res.status(200).json(missingItems);
 
 }
 

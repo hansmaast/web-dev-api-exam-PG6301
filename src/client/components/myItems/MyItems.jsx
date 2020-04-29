@@ -6,22 +6,63 @@ export class MyItems extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            myItems: null
+            myItems: null,
+            missingItems: null
         }
     }
 
     componentDidMount() {
-        //     if (this.props.user) {
-        //         this.props.fetchAndUpdateUserInfo();
-        //     }
-        console.log('User -->', this.props.user)
-        this.fetchMyItems();
+
+        this.fetchMyItems()
+
     }
 
     fetchMyItems = async () => {
         const {myItems} = this.props.user;
 
-        this.setState({myItems: Object.values(myItems)});
+        this.setState({myItems: Object.values(myItems)}, () => this.findMissingItems() );
+    }
+
+    findMissingItems = async () => {
+
+        const {myItems} = this.props.user;
+
+        const myIds = Object.keys(myItems);
+
+        const url = '/api/missing-items'
+        let response;
+
+        try{
+
+            response = await fetch(url, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({myItems: myIds})
+            })
+
+        } catch (err) {
+
+            console.log(err);
+            this.setState({errorMsg: "Failed to connect to server: " + err});
+            return;
+
+        }
+
+        let responsePayload = await response.json();
+
+        if (response.status !== 200) {
+
+            console.log('error', response.status);
+
+        } else {
+
+            console.log('Response from server ->', responsePayload);
+            this.setState({missingItems: [...responsePayload]});
+
+        }
+
     }
 
     sellItem = (id) => {
@@ -38,7 +79,7 @@ export class MyItems extends React.Component {
             this.props.history.push('/');
             return null;
         }
-        const {myItems, errorMsg} = this.state
+        const {myItems, missingItems, errorMsg} = this.state
 
         let error = errorMsg ? <p>{errorMsg}</p> : null
 
@@ -59,6 +100,21 @@ export class MyItems extends React.Component {
             listOfItems = <p> You have no items...</p>
         }
 
+        let listOfMissingItems;
+        if (missingItems !== null && missingItems.length > 0) {
+            listOfMissingItems = missingItems.map((item) => {
+                return (
+                    <div className={'missingItem'} key={item.id} style={styles.noteContainer}>
+                        <h2>{item.name}</h2>
+                        <p>{item.description}</p>
+                        <p>Price: ${item.price},-</p>
+                    </div>
+                )
+            })
+        } else {
+            listOfMissingItems = <p> You have collected all items! </p>
+        }
+
         return (
             <div style={styles.mainContainer}>
                 <h2>Your items:</h2>
@@ -66,6 +122,8 @@ export class MyItems extends React.Component {
                 <div>
                     {listOfItems}
                 </div>
+                <h2>Missing items:</h2>
+                <div>{listOfMissingItems}</div>
             </div>
         )
     }

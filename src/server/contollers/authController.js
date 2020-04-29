@@ -77,7 +77,6 @@ exports.updateUser = (req, res) => {
     }
 
     const user = {...req.body};
-    console.log('data for user update:', user);
     const updated = Users.updateUser(user)
 
     if (updated) {

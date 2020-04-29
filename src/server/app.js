@@ -13,7 +13,6 @@ const path = require('path');
 
 const auth = require('./routes/authentication');
 const gameItems = require('./routes/gameItems');
-const chat = require('./routes/chat');
 
 
 // handling JSON payloads
@@ -43,7 +42,6 @@ app.use(passport.session());
 
 // routes
 app.use('/api', auth);
-app.use('/api', chat);
 app.use('/api', gameItems);
 
 

@@ -67,7 +67,7 @@ export class SignUp extends React.Component {
 
         this.setState({errorMsg: null});
         this.props.history.push('/');
-        console.log(responsePayload);
+
     };
 
     checkInputsIsEmpty = () => {

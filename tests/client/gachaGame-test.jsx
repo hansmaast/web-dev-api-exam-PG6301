@@ -12,9 +12,7 @@ export const {MemoryRouter} = require('react-router-dom');
 export const {app} = require('../../src/server/app');
 const Users = require('../../src/server/db/users');
 
-const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
-const {msg} = require('../../src/shared/utils');
-
+const {overrideFetch} = require('../mytest-utils');
 import {testUser, updateUserLootBoxes, buyUserLootBox} from './mockDataAndFuncs'
 
 

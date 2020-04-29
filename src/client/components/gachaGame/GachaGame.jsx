@@ -31,15 +31,15 @@ export class GachaGame extends React.Component {
         }
 
         let {lootBoxes} = user;
-        console.log('user boxes ->', lootBoxes);
 
         let listOfBoxes;
         if (lootBoxes !== null && lootBoxes > 0) {
+
             const boxArray = [];
             for (let i = lootBoxes; i > 0; i--) {
                 boxArray.push(i);
             }
-            console.log(boxArray);
+
             listOfBoxes = boxArray.map((index) => {
                 return (
                     <LootBox
@@ -50,6 +50,7 @@ export class GachaGame extends React.Component {
                     />
                 )
             })
+
         } else {
             listOfBoxes = <p className={'infoMsg'}>You have no loot!</p>
         }
@@ -57,6 +58,7 @@ export class GachaGame extends React.Component {
 
         return (
             <div style={styles.mainContainer}>
+                <h3>Your cash: ${user.cash}</h3>
                 <button
                     id={'buyLootBtn'}
                     style={styles.buttonStyle}
