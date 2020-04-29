@@ -1,4 +1,10 @@
 
+Test Coverage
+-----                                   
+File      |  % Stmts | % Branch |  % Funcs |  % Lines |
+----------|----------|----------|----------|----------|
+All files |    68.85 |    65.15 |    65.63 |    69.67 | 
+---   
 How to run the application
 -----
 
@@ -13,7 +19,6 @@ How to run the application
 + run test using `yarn test` 
 
 ---
-
 
 What this project does
 -----
@@ -60,7 +65,8 @@ a copied array of the game items. If there is a match, the function removes the 
 missing items in return to the client. 
 
 The front-end of this application has not been much weighted, as it was not a requirement for the exam. For further 
-development I would improve the front-end drastically.   
+development I would improve the front-end drastically. I have written most of the css inline in React. This is fast for
+minor changes, but it makes the testing harder, since you dont need classes and ids on the elements.   
  
 Different technologies used
 -----
@@ -79,6 +85,11 @@ Requrements of exam completed
 
 I did not manage to implement R5.
 
-• links to where you have deployed it.
-• Any instruction on 
-• 
+Known bugs
+-----
+
++ Your cash doesn't decrease when buying a loot box..
++ Refresh from /gach-game and /my-items redirects to Home...
++ From console: `Cannot update during an existing state transition (such as within `render`).`
++ From console: `MyItems.jsx:18 Uncaught (in promise) TypeError: Cannot destructure property 'myItems' of 'this.props.user' as it is null.`
+

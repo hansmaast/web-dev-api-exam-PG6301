@@ -234,7 +234,7 @@ export class App extends React.Component {
                     <Switch>
                         <Route
                             exact
-                            path="/"
+                            path={"/"}
                             render={props => (
                                 <Home
                                     {...props}
@@ -246,7 +246,7 @@ export class App extends React.Component {
 
                         <Route
                             exact
-                            path="/login"
+                            path={"/login"}
                             render={props => (
                                 <Login
                                     {...props}
@@ -258,7 +258,7 @@ export class App extends React.Component {
 
                         <Route
                             exact
-                            path="/signup"
+                            path={"/signup"}
                             render={props => (
                                 <SignUp
                                     {...props}
@@ -269,7 +269,7 @@ export class App extends React.Component {
 
                         <Route
                             exact
-                            path="/gacha-game"
+                            path={"/gacha-game"}
                             render={props => (
                                 <GachaGame
                                     {...props}
@@ -283,7 +283,7 @@ export class App extends React.Component {
 
                         <Route
                             exact
-                            path="/my-items"
+                            path={"/my-items"}
                             render={props => (
                                 <MyItems
                                     {...props}

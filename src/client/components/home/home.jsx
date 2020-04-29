@@ -14,8 +14,6 @@ export class Home extends React.Component {
 
         const loggedInContent = (
             <>
-                <h1>Welcome!</h1>
-                <h3>to</h3>
                 <h1>Gourmet Gacha!</h1>
                 <Link to={'/gacha-game'}>Play Game</Link>
                 <h3>or</h3>

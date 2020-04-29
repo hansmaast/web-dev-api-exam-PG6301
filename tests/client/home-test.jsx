@@ -49,7 +49,7 @@ describe('home page', () => {
 
     it('Should render logged in content', () => {
 
-        expect(wrapper.find('h3')).toHaveLength(2)
+        expect(wrapper.find('h3')).toHaveLength(1)
         expect(wrapper.find('a')).toHaveLength(3)
 
         expect(wrapper.html()).toContain('Play Game');
