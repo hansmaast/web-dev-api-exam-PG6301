@@ -1,17 +1,11 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {styles} from "../../styles";
 
 export class Home extends React.Component {
     constructor(props) {
         super(props);
     }
-
-    // componentDidMount() {
-    //     if (this.props.user) {
-    //         this.props.fetchAndUpdateUserInfo();
-    //     }
-    // }
 
     render() {
 
@@ -54,3 +48,4 @@ export class Home extends React.Component {
         );
     }
 }
+export default withRouter(Home);

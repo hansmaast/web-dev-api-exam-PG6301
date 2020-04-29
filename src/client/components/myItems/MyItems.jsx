@@ -20,7 +20,7 @@ export class MyItems extends React.Component {
     fetchMyItems = async () => {
         const {myItems} = this.props.user;
 
-        this.setState({myItems: Object.values(myItems)}, () => this.findMissingItems() );
+        this.setState({myItems: Object.values(myItems)}, () => this.findMissingItems());
     }
 
     findMissingItems = async () => {
@@ -32,7 +32,7 @@ export class MyItems extends React.Component {
         const url = '/api/missing-items'
         let response;
 
-        try{
+        try {
 
             response = await fetch(url, {
                 method: 'post',
@@ -116,14 +116,18 @@ export class MyItems extends React.Component {
         }
 
         return (
-            <div style={styles.mainContainer}>
-                <h2>Your items:</h2>
-                {error}
-                <div>
-                    {listOfItems}
+            <div style={{...styles.mainContainer, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'start'}}>
+                <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', margin: 10}}>
+                    <h2>Your items:</h2>
+                    {error}
+                    <div>
+                        {listOfItems}
+                    </div>
                 </div>
-                <h2>Missing items:</h2>
-                <div>{listOfMissingItems}</div>
+                <div style={{display: 'flex', flexDirection: 'column', margin: 10}}>
+                    <h2>Missing items:</h2>
+                    <div>{listOfMissingItems}</div>
+                </div>
             </div>
         )
     }

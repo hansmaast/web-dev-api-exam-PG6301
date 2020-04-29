@@ -10,9 +10,9 @@ import {Home} from "./components/home/home";
 import Login from "./components/auth/login";
 import HeaderBar from "./components/header/headerbar";
 import GameDescription from "./components/gameDescription/GameDescription";
-import {MyItems} from "./components/myItems/MyItems";
+import MyItems from "./components/myItems/MyItems";
 import SignUp from "./components/auth/signup";
-import {GachaGame} from "./components/gachaGame/GachaGame";
+import GachaGame from "./components/gachaGame/GachaGame";
 
 
 export class App extends React.Component {
