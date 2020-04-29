@@ -12,13 +12,13 @@ How to run the application
 
 ######From root folder, run the following commands:
 
-+ install dependencies using `yarn install`
++ Install dependencies using `yarn install`
 
-+ build project using `yarn build`
++ Build project using `yarn build`
 
-+ start dev-server using `yarn dev`
++ Start dev-server using `yarn dev`
 
-+ run test using `yarn test` 
++ Run tests using `yarn test` 
 
 ---
 
