@@ -7,30 +7,19 @@ const React = require('react');
 const {mount} = require('enzyme');
 const {MemoryRouter} = require('react-router-dom');
 const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
-const {app} = require('../../src/server/app');
 const {HeaderBar} = require('../../src/client/components/header/headerbar');
 const {resetAllUsers, getUser, createUser} = require('../../src/server/db/users');
 const {msg} = require('../../src/shared/utils');
-const request = require('supertest');
 
-let response;
-let cookie;
+import {testUser} from "./mockDataAndFuncs";
+
 let wrapper;
-
-const validPayload = {userId: 'valid@email.com', firstName: 'Test', lastName: 'Person', password: 'Abc123'};
-
-beforeAll( async () => {
-    // Creates a user to access notes
-    response = await request(app)
-        .post('/api/signup')
-        .send(validPayload);
-    cookie = response.headers['set-cookie'];
-})
-
 beforeEach(() => {
         wrapper = mount(
             <MemoryRouter>
-                <HeaderBar />
+                <HeaderBar
+                    user={testUser}
+                />
             </MemoryRouter>
         )
     }
@@ -50,7 +39,7 @@ describe('headerbar if logged in', () => {
         expect(wrapper.find('div')).toHaveLength(1);
     });
 
-    it('should contain Home, notes and Logout', function () {
+    it('should contain Home, my items, gacha and Logout', function () {
         expect(wrapper.html()).toContain('Home');
         expect(wrapper.html()).toContain('My Items');
         expect(wrapper.html()).toContain('Gacha');
@@ -63,23 +52,42 @@ describe('headerbar if logged in', () => {
 
 })
 
-// describe('headerbar if not logged in', () => {
-//
-//     it('should contain 2 divs', async () => {
-//         response = await request(app)
-//             .post('/api/logout')
-//         expect(wrapper.find('div')).toHaveLength(2);
-//     });
-//
-//     it('should contain 3 links', function () {
-//         expect(wrapper.find('a')).toHaveLength(3);
-//     });
-//
-//     it('should display welcome message', function () {
-//         expect(wrapper.html()).toContain('not logged in')
-//     });
-//
-// })
+describe('headerbar if not logged in', () => {
+
+    it('should contain 2 divs', async () => {
+
+        wrapper = mount(
+            <MemoryRouter>
+                <HeaderBar
+                    user={null}
+                />
+            </MemoryRouter>
+        )
+
+        console.log(wrapper.html());
+
+        expect(wrapper.html()).toContain('LogIn');
+        expect(wrapper.html()).toContain('Home');
+    });
+
+
+    it('should display not logged in', function () {
+
+
+        wrapper = mount(
+            <MemoryRouter>
+                <HeaderBar
+                    user={null}
+                />
+            </MemoryRouter>
+        )
+
+        console.log(wrapper.html());
+
+        expect(wrapper.html()).toContain('not logged in')
+    });
+
+})
 
 // it("should fail on invalid username or password", async () => {
 //

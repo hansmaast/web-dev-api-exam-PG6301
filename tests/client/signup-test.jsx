@@ -11,17 +11,27 @@ const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
 const {app} = require('../../src/server/app');
 
 
-const {SignUp} = require('~/client/components/auth/signup');
+const {SignUp} = require('../../src/client/components/auth/signup');
 const {resetAllUsers, getUser, createUser} = require('../../src/server/db/users');
 
 const {msg} = require('../../src/shared/utils');
 
 let wrapper;
+let page = null;
 
 beforeEach(() => {
+
+    const fetchAndUpdateUserInfo = () => new Promise(resolve => resolve());
+
+    const history = {
+        push: (h) => {
+            page = h
+        }
+    };
+
         wrapper = mount(
             <MemoryRouter initialEntries={["/signup"]}>
-                <SignUp />
+                <SignUp fetchAndUpdateUserInfo={fetchAndUpdateUserInfo} history={history}/>
             </MemoryRouter>
         )
     }
@@ -78,17 +88,57 @@ describe('signup component', () => {
 
 })
 
-// it("should fail on invalid username or password", async () => {
-//
-//     overrideFetch(app);
-//
-//     fillForm(wrapper, "foo", "123");
-//
-//     await asyncCheckCondition(
-//         () => {
-//             wrapper.update();
-//         },
-//         2000, 200);
-//
-//     expect(wrapper.html()).toContain(msg.invalidUserOrPassword);
-// });
+describe('signup fail', () => {
+
+    it("should fail on invalid email", async () => {
+
+        overrideFetch(app);
+
+        fillForm(wrapper, 'emaile.com', "Foo", 'Bar', 'Foo123', 'Foo123');
+
+        await asyncCheckCondition(
+            () => {
+                wrapper.update();
+            },
+            200, 20);
+
+        expect(wrapper.html()).toContain(msg.invalidEmail);
+    });
+
+    it("should fail on invalid password", async () => {
+
+        overrideFetch(app);
+
+        fillForm(wrapper, 'email@e.com', "Foo", 'Bar', 'Foo', 'Foo');
+
+        await asyncCheckCondition(
+            () => {
+                wrapper.update();
+            },
+            200, 20);
+
+        expect(wrapper.html()).toContain(msg.invalidPassword);
+    });
+
+})
+
+
+describe('Signup success', () => {
+
+    it('should redirect to home page', async () => {
+
+        overrideFetch(app);
+
+        fillForm(wrapper, 'email@e.com', "Foo", 'Bar', 'Foo123', 'Foo123');
+
+        const redirected = await asyncCheckCondition(
+            () => {
+                return page === "/"
+            },
+            200, 20);
+
+        expect(redirected).toEqual(true);
+    });
+
+})
+

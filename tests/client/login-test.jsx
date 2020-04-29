@@ -7,28 +7,47 @@ const React = require('react');
 const {mount} = require('enzyme');
 const {MemoryRouter} = require('react-router-dom');
 
-const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
+
 const {app} = require('../../src/server/app');
+const Users = require('../../src/server/db/users');
 
-
-const {Login} = require('~/client/components/auth/login');
-const {resetAllUsers, getUser, createUser} = require('../../src/server/db/users');
-
+const {overrideFetch, asyncCheckCondition} = require('../mytest-utils');
 const {msg} = require('../../src/shared/utils');
 
+
+const validPayload = {userId: 'valid@email.com', password: 'Abc123'};
+const invalidEmail = {userId: 'invalid@email', password: 'Abc123'};
+const invalidPassword = {userId: 'invalid@email.com', password: 'abc'};
+
+const {Login} = require('../../src/client/components/auth/login');
+
+
 let wrapper;
+let page = null;
 
 beforeEach(() => {
+
+        Users.createUser(validPayload.userId, 'Test', 'Person', validPayload.password);
+
+        const fetchAndUpdateUserInfo = () => new Promise(resolve => resolve());
+
+        const history = {
+            push: (h) => {
+                page = h
+            }
+        };
+
         wrapper = mount(
             <MemoryRouter initialEntries={["/login"]}>
-                <Login/>
+                <Login fetchAndUpdateUserInfo={fetchAndUpdateUserInfo} history={history}/>
             </MemoryRouter>
-        )
+        );
+
     }
 );
 
 afterEach(() => {
-    resetAllUsers();
+    Users.resetAllUsers();
     wrapper.unmount();
 })
 
@@ -85,35 +104,18 @@ it("should fail on invalid username or password", async () => {
     expect(wrapper.html()).toContain(msg.invalidUserOrPassword);
 });
 
-// test("Test valid login", async () => {
-//
-//     const userId = "valid@email.com";
-//     const password = "Abc123";
-//     createUser(userId, password);
-//
-//     overrideFetch(app);
-//
-//     const fetchAndUpdateUserInfo = () => new Promise(resolve => resolve());
-//     let page = null;
-//     const history = {
-//         push: (h) => {
-//             page = h
-//         }
-//     };
-//
-//     const wrapper = mount(
-//         <MemoryRouter initialEntries={["/signup"]}>
-//             <Login updateLoggedInUserId={fetchAndUpdateUserInfo} history={history}/>
-//         </MemoryRouter>
-//     );
-//
-//     fillForm(wrapper, userId, password);
-//
-//     const redirected = await asyncCheckCondition(
-//         () => {
-//             return page === "/"
-//         },
-//         2000, 200);
-//
-//     expect(redirected).toEqual(true);
-// });
+test("Test valid login", async () => {
+
+    overrideFetch(app);
+
+
+    fillForm(wrapper, validPayload.userId, validPayload.password);
+
+    const redirected = await asyncCheckCondition(
+        () => {
+            return page === "/"
+        },
+        200, 20);
+
+    expect(redirected).toEqual(true);
+});
