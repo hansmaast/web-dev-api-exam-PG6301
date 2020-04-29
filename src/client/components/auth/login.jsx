@@ -51,11 +51,9 @@ export class Login extends React.Component {
             return;
         }
 
-        const responsePayload = await response.json();
+        await this.props.fetchAndUpdateUserInfo();
 
         this.setState({errorMsg: null});
-        console.log(responsePayload);
-        this.props.updateLoggedInUser(responsePayload.user);
         this.props.history.push('/');
     };
 

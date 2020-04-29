@@ -43,6 +43,7 @@ export class GachaGame extends React.Component {
             listOfBoxes = boxArray.map((index) => {
                 return (
                     <LootBox
+                        key={index}
                         items={3}
                         updateUserLootBoxes={this.props.updateUserLootBoxes}
                         updateUserItems={this.props.updateUserItems}
@@ -50,13 +51,14 @@ export class GachaGame extends React.Component {
                 )
             })
         } else {
-            listOfBoxes = <p>You have no loot!</p>
+            listOfBoxes = <p className={'infoMsg'}>You have no loot!</p>
         }
 
 
         return (
             <div style={styles.mainContainer}>
                 <button
+                    id={'buyLootBtn'}
                     style={styles.buttonStyle}
                     onClick={() => this.buyLootBox(1000)}
                 > BUY SOME LOOT

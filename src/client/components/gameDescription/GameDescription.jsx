@@ -40,7 +40,7 @@ export class GameDescription extends React.Component {
         if (gameItems !== null && gameItems.length > 0) {
             listOfItems = gameItems.map((item, index) => {
                 return (
-                    <div key={index} style={styles.noteContainer}>
+                    <div className={'gameItem'} key={index} style={styles.noteContainer}>
                         <h2>{item.name}</h2>
                         <p>{item.description}</p>
                         <p>Price: ${item.price},-</p>

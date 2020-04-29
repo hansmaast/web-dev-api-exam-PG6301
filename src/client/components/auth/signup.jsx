@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom'
 import {styles} from "../../styles";
-import {validateEmail, validatePassword, msg} from "../../../shared/utils";
+import {msg} from "../../../shared/utils";
 
 export class SignUp extends React.Component {
 
@@ -50,6 +50,8 @@ export class SignUp extends React.Component {
             return;
         }
 
+        const responsePayload = await response.json()
+
         if (response.status === 400) {
             this.setState({errorMsg: responsePayload.msg});
             return;
@@ -60,8 +62,9 @@ export class SignUp extends React.Component {
             return;
         }
 
-        const responsePayload = await response.json()
-        this.props.updateLoggedInUser(responsePayload.user);
+
+        await this.props.fetchAndUpdateUserInfo();
+
         this.setState({errorMsg: null});
         this.props.history.push('/');
         console.log(responsePayload);

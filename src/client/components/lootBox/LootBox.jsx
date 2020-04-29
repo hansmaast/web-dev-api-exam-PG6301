@@ -78,13 +78,14 @@ export class LootBox extends React.Component {
         }
 
 
+        // TODO: fix this test, onclick is not registered?
         return (
-            <div style={styles.noteContainer}>
+            <div className={'lootBox'} style={styles.noteContainer}>
                 <h2>You got a loot box!</h2>
                 <div>
                     {listOfItems}
                 </div>
-                <button onClick={() => this.getRandomItems(items)}>Gimme some loot!</button>
+                <button className={'gimmeLootBtn'} onClick={() => this.getRandomItems(items)}>Gimme some loot!</button>
                 <button onClick={this.props.updateUserLootBoxes.remove}>Remove box</button>
             </div>
         )

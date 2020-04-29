@@ -11,6 +11,9 @@ export class MyItems extends React.Component {
     }
 
     componentDidMount() {
+        //     if (this.props.user) {
+        //         this.props.fetchAndUpdateUserInfo();
+        //     }
         console.log('User -->', this.props.user)
         this.fetchMyItems();
     }
@@ -43,12 +46,12 @@ export class MyItems extends React.Component {
         if (myItems !== null && myItems.length > 0) {
             listOfItems = myItems.map((item) => {
                 return (
-                    <div key={item.id} style={styles.noteContainer}>
+                    <div className={'myItem'} key={item.id} style={styles.noteContainer}>
                         <h2>{item.name}</h2>
                         <p>{item.description}</p>
                         <p>Price: ${item.price},-</p>
                         <p>Amount: {item.amount}</p>
-                        <button onClick={() => this.sellItem(item.id)}>Sell item</button>
+                        <button className={'sellItemBtn'} onClick={() => this.sellItem(item.id)}>Sell item</button>
                     </div>
                 )
             })
