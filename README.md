@@ -77,13 +77,19 @@ The project also uses Webpack for bundling, along with Babel for transpiling.
 
 Requrements of exam completed
 ---
-- [x] R1
-- [x] R2
-- [x] R3
-- [x] R4
-- [ ] R5
-
-I did not manage to implement R5.
+- [x] R1  
+- [x] R2 
+- [x] R3 
+- [x] R4 
+- [ ] R5  
+----
+- [x] T1 
+- [x] T2
+- [x] T3
+- [x] T4
+- [x] T5
+-------
+I did not manage to implement R5, as well as T6.
 
 Known bugs
 -----
