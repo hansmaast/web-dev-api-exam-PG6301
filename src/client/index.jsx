@@ -13,9 +13,7 @@ import {GachaGame} from "./components/gachaGame/GachaGame";
 
 /**
  *TODO: -->
- * - Write those tests!!
  * - Increment money when buying loot
- * - Tests tests test
  * - Maybye implement chat if time..
  */
 
