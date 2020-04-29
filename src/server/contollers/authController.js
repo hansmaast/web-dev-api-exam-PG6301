@@ -85,7 +85,7 @@ exports.updateUser = (req, res) => {
             msg: 'user updated!'
         });
     } else {
-        res.status(200).json({
+        res.status(400).json({
             msg: 'could not update user..'
         });
     }

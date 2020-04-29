@@ -5,6 +5,11 @@ exports.getItems = (req, res) => {
 
     const items = GameItems.getAllItems();
 
+    if(!items) {
+        res.status(500).json({msg: 'Internal server error'});
+        return;
+    }
+
     if (items.length === 0) {
         res.status(200).json({msg: 'There are no items in this game..'});
         return;

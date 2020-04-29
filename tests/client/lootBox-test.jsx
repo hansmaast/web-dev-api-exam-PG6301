@@ -55,14 +55,11 @@ describe('the loot box', () => {
     })
 
     it('should display items on click', () => {
-        const lootBtn = wrapper.find('.gimmeLootBtn');
+        const lootBtn = wrapper.find('.gimmeLootBtn').at(0);
 
         lootBtn.simulate('click');
 
-        console.log(wrapper.html());
-
         console.log(lootBtn.length)
     })
-
 
 })

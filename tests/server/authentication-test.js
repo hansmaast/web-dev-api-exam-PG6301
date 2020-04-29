@@ -13,6 +13,7 @@ let cookie;
 const validPayload = {userId: 'valid@email.com', password: 'Abc123'};
 const invalidEmail = {userId: 'invalid@email', password: 'Abc123'};
 const invalidPassword = {userId: 'invalid@email.com', password: 'abc'};
+const {testUser} = require('../client/mockDataAndFuncs');
 
 /*
     Useful during debugging. By default, when there is an internal
@@ -100,6 +101,22 @@ describe('sign up, log out and log in', () => {
         response = await request(app)
             .post('/api/signup')
             .send(validPayload);
+        expect(response.statusCode).toBe(400);
+    });
+
+    it("should update user data", async () => {
+        response = await request(app)
+            .put('/api/user')
+            .set('cookie', cookie)
+            .send(testUser);
+        expect(response.statusCode).toBe(200);
+    });
+
+    it("should not update user with invalid data ", async () => {
+        response = await request(app)
+            .put('/api/user')
+            .set('cookie', cookie)
+            .send({data: 'random data'});
         expect(response.statusCode).toBe(400);
     });
 

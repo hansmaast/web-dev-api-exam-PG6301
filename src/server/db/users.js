@@ -57,7 +57,7 @@ function resetAllUsers() {
 }
 
 function updateUser(user) {
-    if (!user) {
+    if (!user.email || !user.firstName) {
         return false;
     }
 
