@@ -63,7 +63,7 @@ export class HeaderBar extends React.Component {
     renderNotLoggedIn() {
         return (
             <>
-                <p>You are not logged in</p>
+
                 <button style={styles.secondaryBtn}>
                     <Link id={'loginLink'} to="/login">
                         LogIn

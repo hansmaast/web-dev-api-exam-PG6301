@@ -65,21 +65,6 @@ describe('headerbar if not logged in', () => {
         expect(wrapper.html()).toContain('Home');
     });
 
-
-    it('should display not logged in', function () {
-
-
-        wrapper = mount(
-            <MemoryRouter>
-                <HeaderBar
-                    user={null}
-                />
-            </MemoryRouter>
-        )
-
-        expect(wrapper.html()).toContain('not logged in')
-    });
-
 })
 
 // it("should fail on invalid username or password", async () => {
