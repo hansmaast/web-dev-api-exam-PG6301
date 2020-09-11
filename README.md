@@ -10,7 +10,7 @@ All files |    68.85 |    65.15 |    65.63 |    69.67 |
 How to run the application
 -----
 
-####From root folder, run the following commands:
+<strong>From root folder, run the following commands:<strong>
 
 + Install dependencies using `yarn install`
 
