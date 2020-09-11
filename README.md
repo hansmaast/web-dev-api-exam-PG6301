@@ -1,4 +1,4 @@
-###Deployed to [Heroku](https://warm-cove-01429.herokuapp.com/)
+#Deployed to [Heroku](https://warm-cove-01429.herokuapp.com/)
 
 -----  
 Test Coverage
@@ -10,7 +10,7 @@ All files |    68.85 |    65.15 |    65.63 |    69.67 |
 How to run the application
 -----
 
-######From root folder, run the following commands:
+#####From root folder, run the following commands:
 
 + Install dependencies using `yarn install`
 
