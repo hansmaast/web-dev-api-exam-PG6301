@@ -49,7 +49,7 @@ data down to the child components props. Some of the components also contains fu
 specific for the component.     
 
 ---
-How you implemented it:
+How i implemented it
 -----
 
 The user data lives inside the user object, which gets deserialized when authenticated with Passport. Most of the 
@@ -90,6 +90,7 @@ Requrements of exam completed
 - [x] T3
 - [x] T4
 - [x] T5
+- [x] T6
 -------
 I did not manage to implement R5, as well as T6.
 
